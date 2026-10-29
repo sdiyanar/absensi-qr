@@ -1,0 +1,233 @@
+/* TEMA SOFT PINK & BLUE GLASSMORPHISM AESTHETIC */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    color: #334155;
+}
+
+/* KARTU GLASSMORPHISM SOFT */
+.card-glass {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 24px;
+    padding: 24px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 15px 35px rgba(166, 193, 238, 0.3);
+    transition: all 0.3s ease;
+}
+
+.wide-card { 
+    max-width: 520px; 
+}
+
+.super-wide { 
+    max-width: 600px; 
+    max-height: 88vh;          /* Membatasi tinggi agar pas di layar HP */
+    overflow-y: auto;          /* Scroll otomatis ke bawah jika konten panjang */
+}
+
+/* HEADER & TEKS */
+.brand-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.brand-header h2 {
+    font-size: 22px;
+    color: #475569;
+    font-weight: 700;
+}
+.brand-header p, .sub-text {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.header-nav h3 {
+    font-size: 18px;
+    color: #334155;
+}
+
+/* ELEMEN FORM */
+.form-group {
+    margin-bottom: 16px;
+    text-align: left;
+}
+.form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 6px;
+}
+select, input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.6);
+    color: #334155;
+    font-size: 13px;
+    outline: none;
+}
+select option { 
+    background: #e2e8f0; 
+    color: #334155; 
+}
+
+/* TOMBOL SOFT PINK ESTETIK */
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-primary {
+    background: linear-gradient(135deg, #f472b6, #fb7185);
+    color: white;
+    box-shadow: 0 8px 20px rgba(244, 114, 182, 0.35);
+}
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.7);
+    color: #475569;
+    margin-top: 15px;
+}
+.btn-sm {
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: none;
+    background: #fb7185;
+    color: white;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+/* KOTAK SCANNER */
+.scanner-box {
+    margin-top: 15px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px dashed #f472b6;
+}
+.result-box {
+    margin-top: 12px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    font-size: 12px;
+    text-align: center;
+    color: #475569;
+}
+
+/* GRID STATISTIK ADMIN (8 KOTAK) */
+.stats-grid-8 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 15px 0;
+}
+.mini-card {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 8px 4px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+.m-title { 
+    display: block; 
+    font-size: 9px; 
+    color: #64748b; 
+    font-weight: 500; 
+}
+.m-val { 
+    font-size: 13px; 
+    font-weight: 700; 
+    color: #334155; 
+}
+
+.mini-card.green .m-val { color: #10b981; }
+.mini-card.yellow .m-val { color: #f59e0b; }
+.mini-card.blue .m-val { color: #3b82f6; }
+.mini-card.purple .m-val { color: #8b5cf6; }
+.mini-card.orange .m-val { color: #f97316; }
+.mini-card.red .m-val { color: #ef4444; }
+.mini-card.pink .m-val { color: #ec4899; }
+
+/* TABEL GURU */
+.table-responsive {
+    overflow-x: auto;
+    margin-top: 10px;
+}
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+.data-table th, .data-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+.badge {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 10px;
+    color: white;
+    font-weight: 600;
+}
+.badge-success { background: #10b981; }
+.badge-warning { background: #f59e0b; }
+.badge-info { background: #3b82f6; }
+
+/* CONTAINER DIAGRAM */
+.charts-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 15px;
+}
+@media (max-width: 480px) {
+    .charts-wrapper { 
+        grid-template-columns: 1fr; 
+    }
+}
+.chart-box {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+}
+.chart-box h4 {
+    font-size: 11px;
+    color: #475569;
+    margin-bottom: 8px;
+    text-align: center;
+}
+.chart-container-donut, .chart-container-bar {
+    position: relative;
+    height: 150px;
+    width: 100%;
+}

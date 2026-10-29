@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absensi Smart QR - Soft Pink & Blue Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Library QR Scanner -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <!-- Library Chart.js untuk Diagram Bulat & Batang -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- HALAMAN 1: LOGIN MULTI-PERAN -->
+    <div id="login-page" class="container card-glass">
+        <div class="brand-header">
+            <span class="icon-sparkle">🌸</span>
+            <h2>Smart Absensi QR</h2>
+            <p>SMKN 1 GS • Portal Kehadiran Digital</p>
+        </div>
+        
+        <div class="form-group">
+            <label for="role-select">Pilih Akses Masuk:</label>
+            <select id="role-select">
+                <option value="siswa">🎓 Siswa / Peserta Didik</option>
+                <option value="guru">👩‍🏫 Guru / Pengajar</option>
+                <option value="admin">💻 Admin Sekolah</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="password-input">Kata Sandi (Khusus Guru/Admin):</label>
+            <input type="password" id="password-input" placeholder="Masukkan sandi akses...">
+        </div>
+
+        <button class="btn btn-primary" onclick="handleLogin()">Masuk ke Dashboard</button>
+    </div>
+
+    <!-- HALAMAN 2: SCANNER SISWA -->
+    <div id="student-page" class="container card-glass" style="display: none;">
+        <div class="header-nav">
+            <h3>📷 Pemindai QR Siswa</h3>
+            <span class="badge-status">Sistem Aktif</span>
+        </div>
+        <p class="sub-text">Arahkan kamera HP ke Kode QR pada Kartu Pelajar kamu</p>
+        
+        <div class="scanner-box">
+            <div id="reader"></div>
+        </div>
+        
+        <div id="result" class="result-box">Menunggu pemindaian QR...</div>
+        
+        <button class="btn btn-secondary" onclick="goBackToLogin()">⬅️ Kembali ke Login</button>
+    </div>
+
+    <!-- HALAMAN 3: REKAP GURU (FILTER KELAS FLEKSIBEL) -->
+    <div id="teacher-page" class="container card-glass wide-card" style="display: none;">
+        <div class="header-nav">
+            <h3>📑 Data Kehadiran Siswa</h3>
+            <button class="btn-sm" onclick="goBackToLogin()">Keluar</button>
+        </div>
+        <p class="sub-text">Pantau dan ubah status kehadiran siswa berdasarkan kelas</p>
+        
+        <!-- Filter Pilihan Kelas -->
+        <div class="form-group" style="margin-bottom: 12px;">
+            <label for="filter-kelas">Filter Berdasarkan Kelas:</label>
+            <select id="filter-kelas" onchange="filterDataKelas()">
+                <option value="semua">📂 Semua Kelas (X, XI, XII)</option>
+                <option value="X">Kelas X (Semua Jurusan)</option>
+                <option value="XI">Kelas XI (Semua Jurusan)</option>
+                <option value="XII">Kelas XII (Semua Jurusan)</option>
+            </select>
+        </div>
+
+        <div class="table-responsive">
+            <table class="data-table" id="tabel-absensi">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Siswa</th>
+                        <th>Kelas</th>
+                        <th>Status</th>
+                        <th>Ubah Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-kelas="X">
+                        <td>01</td>
+                        <td><strong>Alya Putri</strong></td>
+                        <td>X TJKT 1</td>
+                        <td><span class="badge badge-success">Hadir</span></td>
+                        <td>
+                            <select class="select-sm" onchange="ubahStatus(this, 'Alya Putri')">
+                                <option value="Hadir" selected>Hadir</option>
+                                <option value="Terlambat">Terlambat</option>
+                                <option value="Izin">Izin</option>
+                                <option value="Sakit">Sakit</option>
+                                <option value="Alfa">Alfa</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr data-kelas="XI">
+                        <td>02</td>
+                        <td><strong>Budi Santoso</strong></td>
+                        <td>XI BP 1</td>
+                        <td><span class="badge badge-warning">Terlambat</span></td>
+                        <td>
+                            <select class="select-sm" onchange="ubahStatus(this, 'Budi Santoso')">
+                                <option value="Hadir">Hadir</option>
+                                <option value="Terlambat" selected>Terlambat</option>
+                                <option value="Izin">Izin</option>
+                                <option value="Sakit">Sakit</option>
+                                <option value="Alfa">Alfa</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr data-kelas="XII">
+                        <td>03</td>
+                        <td><strong>Citra Dewi</strong></td>
+                        <td>XII TO 2</td>
+                        <td><span class="badge badge-info">Izin</span></td>
+                        <td>
+                            <select class="select-sm" onchange="ubahStatus(this, 'Citra Dewi')">
+                                <option value="Hadir">Hadir</option>
+                                <option value="Terlambat">Terlambat</option>
+                                <option value="Izin" selected>Izin</option>
+                                <option value="Sakit">Sakit</option>
+                                <option value="Alfa">Alfa</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- HALAMAN 4: DASHBOARD ADMIN ANALYTICS -->
+    <div id="admin-page" class="container card-glass super-wide" style="display: none;">
+        <div class="header-nav">
+            <div>
+                <h3>📊 Executive Analytics Admin</h3>
+                <p class="sub-text">Ringkasan Statistik Kehadiran Real-time</p>
+            </div>
+            <button class="btn-sm" onclick="goBackToLogin()">Keluar</button>
+        </div>
+
+        <!-- Grid 8 Kartu Statistik -->
+        <div class="stats-grid-8">
+            <div class="mini-card"><span class="m-title">👥 Total</span><span class="m-val">47</span></div>
+            <div class="mini-card green"><span class="m-title">✅ Hadir</span><span class="m-val">38</span></div>
+            <div class="mini-card yellow"><span class="m-title">⏰ Telat</span><span class="m-val">3</span></div>
+            <div class="mini-card blue"><span class="m-title">🏠 Pulang</span><span class="m-val">1</span></div>
+            <div class="mini-card purple"><span class="m-title">📩 Izin</span><span class="m-val">2</span></div>
+            <div class="mini-card orange"><span class="m-title">🏥 Sakit</span><span class="m-val">1</span></div>
+            <div class="mini-card red"><span class="m-title">❌ Alfa</span><span class="m-val">2</span></div>
+            <div class="mini-card pink"><span class="m-title">📈 % Hadir</span><span class="m-val">87.2%</span></div>
+        </div>
+
+        <!-- Container Diagram -->
+        <div class="charts-wrapper">
+            <div class="chart-box">
+                <h4>🍩 Presentase Kehadiran</h4>
+                <div class="chart-container-donut">
+                    <canvas id="donutChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-box">
+                <h4>📊 Sebaran Data Absensi</h4>
+                <div class="chart-container-bar">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
